@@ -1,0 +1,56 @@
+﻿
+
+<div ng-controller="departmentrolemenuController" class="">
+    <!-- CONTENT -->
+    <div id="content" class="dx-viewport">
+        <div class="page-title">
+            <h1><b>Setting > Master > Department Role Menu</b></h1>
+        </div>
+        <div class="form">
+            <div id="container">
+                <ul style="list-style:none;">
+                    <li data-jstree='{"opened":true}'>
+                    </li>
+                </ul>
+            </div>
+            <div id="product-details"class="col-md-12">
+                <div class="pane equal" style="overflow:hidden;">
+                    <div class="col-md-4">
+                        Role <select ng-model="rolesid" ng-options="item.rolesid as item.roles for item in Role" class="form-control"></select>
+                    </div>
+                    <div class="col-md-4">
+                        Department <select ng-model="departmentid" ng-options="item.departmentid as item.department for item in Department" class="form-control"></select>
+                    </div>
+                    <div class="col-md-4">
+                       <br /><button type="button" ng-click="GetMenuData()" class="btn btn-success">Get Menu Data</button>
+
+                    </div>
+                    <br />
+                    <br /><br /><br />
+                    <div class="role-menu">
+                        <div class="col-md-12">
+                            Menu <tree-viewdepartmentrolemenu checkbox ng-click="myClick(nodes)" id="treeviewnodedepartmentrolemenu" model="nodesdepartmentrolemenu"></tree-viewdepartmentrolemenu>
+
+                        </div>
+                    </div>
+                    <br />
+                    
+                    <button type="button" ng-click="updatemapping()" class="btn btn-success pull-right">Update Mapping</button>
+                </div>
+                </div>
+        </div>
+    </div>
+</div>
+<script src="vendor/plugins/form/switchery/switchery.min.js"></script>
+<script src="vendor/plugins/form/icheck/icheck.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //ICHECK
+        debugger;
+        var success = document.querySelector('.switch-success');
+        var switchery = new Switchery(success, { color: '#16a085' });
+        // Colors
+        var success1 = document.querySelector('.switch-success1');
+        var switchery = new Switchery(success1, { color: '#16a085' });
+    });//END
+</script>

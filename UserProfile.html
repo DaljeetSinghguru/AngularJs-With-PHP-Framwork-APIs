@@ -1,0 +1,140 @@
+﻿<div ng-controller="UserProfileController" class="">
+
+    <div id="content">
+        <div class="page-title">
+            <h1><b>My Profile</b></h1>
+        </div>
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="pane equal" style="overflow:hidden;">
+
+                        <!--Basic Detail -->
+                        <div class="col-sm-8 nopadding">
+                            <div class="form-group col-sm-6 nopadding">
+                                <label>First name</label>
+                                <input type="text" ng-model="UserProfile.firstname" class="form-control" />
+
+
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Last name</label>
+                                <input type="text" ng-model="UserProfile.lastname" class="form-control" />
+                            </div>
+                            <div class="form-group col-sm-6 nopadding">
+                                <label>Mobile</label>
+                                <input type="text" ng-model="UserProfile.mobile" class="form-control" />
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Email</label>
+                                <input type="text" ng-model="UserProfile.email" class="form-control" />
+                            </div>
+                            <div class="form-group col-sm-6 nopadding">
+                                <label>Company</label>
+                                <input type="text" ng-model="UserProfile.company" class="form-control" />
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Department</label>
+                                <input type="text" ng-model="UserProfile.department" class="form-control" />
+                            </div>
+
+                            <div class="form-group col-sm-6 nopadding">
+                                <label>Role</label>
+                                <input type="text" ng-model="UserProfile.roles" class="form-control" />
+                            </div>
+
+                            <div class="form-group col-sm-6">
+                                <label>User name</label>
+                                <input type="text" ng-model="UserProfile.username" class="form-control" />
+                            </div> 
+                            <div class="form-group col-sm-6 nopadding">
+                                <label>Access start date</label>
+                                <input type="text" ng-model="UserProfile.accessstartdate" class="form-control" />
+                            </div>
+                            <!--<div class="form-group col-sm-6">
+                            <label>Access end date</label>
+                            <label class="form-control"></label>
+                        </div>-->
+
+                        </div>
+                        <!--Basic Detail -->
+                        <!--Image -->
+                        <div class="col-sm-4 nopadding">
+                            <div class="col-md-4">
+                                <div class="sec">
+                                    <p><strong>Image</strong></p>
+
+                                    <!--<div class="k-widget k-upload k-header k-upload-sync k-upload-empty"><div class="k-button k-upload-button" aria-label="Select files..."><input name="files" id="files" type="file" aria-label="files" data-role="upload" multiple="multiple" autocomplete="off"><span>Select file</span></div></div>-->
+
+
+                                    <div class="input-sec" style="width:200px">
+                                        <!--SHOW DIV WHEN THE NO IMAGE IS FOUND-->
+                                        <div ng-show="WhenNoImageIsUploaded==true" style="background:#ccc; text-align:center; font-size:14px; font-weight:bold; text-transform:uppercase; width:120px; margin-bottom:10px; float:left; padding-top:40px; border-radius:10px; color:#666; height:120px;">
+                                            No Photo<br /> Available
+                                        </div>
+                                        <!--SHOW DIV WHEN THE IMAGE IS FOUND-->
+                                        <div ng-show="WhenImageIsUploaded==true">
+                                            <img src="{{UserProfile.userimage}}" class="thumb" style="width:120px; border:1px solid #666; border-radius:5px; height:120px; margin-bottom:10px; float:left;" ng-src="{{stepsModel[0]}}" />
+                                        </div>
+
+                                        <div class="upload-img">
+                                            <label class="custom-file-upload cutmCls-Manager cutmCls-Counselor cutmCls-Admission btn btn-success">
+                                                <input type='file' class="k-button k-upload-button" accept="image/x-png,image/jpg,image/jpeg" ng-model-instant onchange="angular.element(this).scope().imageUpload(event)" />
+                                                Choose Image
+                                            </label>
+                                        </div>
+                                        <span ng-show="EFV_PPI_ImageUpload==true" class="errorctmMsg">Please Upload Image</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Image -->
+                        <!--Tableau -->
+                        <!--<div class="col-sm-12" style="background-color:lightgray;margin-top: 2%;"></div>
+                                       <div class="col-sm-12" style="margin-top: 2%;">
+                                            <div class="col-sm-12">  <label style="font-size: 15px;">Tableau</label></div>
+                       <div class="form-group col-sm-4">
+                                            <label>User name</label>
+                                           <label class="form-control">Sukhwinder</label>
+                                        </div>
+                                              <div class="form-group col-sm-4">
+                                            <label>Password</label>
+                                           <label class="form-control">Sukhw@123</label>
+                                        </div>
+                                            <div class="form-group col-sm-4">
+                                            <label>Licence type</label>
+                                           <label class="form-control">Viewer</label>
+                                        </div>
+                                            <div class="form-group col-sm-4">
+                                            <label>Licence key</label>
+                                           <label class="form-control">tadfdewr123</label>
+                                        </div>
+                                            <div class="form-group col-sm-4">
+                                            <label>Start date</label>
+                                           <label class="form-control">10 Oct 2018</label>
+                                        </div>
+                                            <div class="form-group col-sm-4">
+                                            <label>End date</label>
+                                           <label class="form-control"></label>
+                                        </div>
+                                       </div>
+
+                    </div>-->
+
+                    </div><!-- row -->
+                </div>
+                <div class="col-md-12">
+                    <div class="pane">
+                        <h2 class="help"><span>Menu Help:</span></h2>
+                        <p> {{menuhelp}}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- container-fluid -->
+
+
+    </div>
+</div>
+

@@ -1,0 +1,453 @@
+﻿<link href="assets/css/ui.css" rel="stylesheet">
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css"></script>-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.js"></script>
+<div ng-controller="usermanagementController" class="">
+    <!-- CONTENT -->
+    <div id="content">
+
+        <div class="page-title">
+            <h1><b>Setting > Master > User Management</b></h1>
+        </div>
+        <!-- container-fluid -->
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="pane equal" style="overflow:hidden;">
+                        <div class="form-group">
+                            <div class="col-md-10 nopadding">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search" ng-model="search">
+                                    <!--<span class="input-group-addon" ng-click="opensearchfilter()"><i class="fa fa-filter"></i></span>-->
+                                    <span class="input-group-addon" ng-click="searchme()"><i class="fa fa-search"></i></span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-2 nopadding">
+                                <div style="float:left; margin:0px 0 0 10px;"><button style="height:40px;" class="btn btn-success btn-block" ng-click="searchme()">Search</button></div>&nbsp;
+                                <div style="float:left; margin:0px 0 0 10px;"><button style="height:40px;" id="clear" class="btn btn-success btn-block" ng-click="getuser()">Clear</button></div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div><!-- row -->
+            <!--<button type="button" style="float:left;margin-bottom: 10px;" class="btn btn-success" ng-click="addEmployee()">Add New Employee</button>-->
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="pane equal" style="overflow:hidden;">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+
+                                        <th>Name</th>
+                                        <th>Company</th>
+                                        <th>Department</th>
+
+                                        <th>Tableau type</th>
+                                        <th>Tableau key</th>
+                                        <th>Start date</th>
+                                        <th>End date</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="emp in users">
+                                        <td>{{$index+1}}</td>
+
+                                        <td ng-click="openmenu(emp)">{{emp.username}}</td>
+                                        <td>{{emp.company}}</td>
+                                        <td>{{emp.department}}</td>
+
+                                        <td>{{emp.ftableaulicencetype}}</td>
+                                        <td>{{emp.tableaukey}}</td>
+                                        <td>{{emp.startdate}}</td>
+                                        <td>{{emp.enddate}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+
+                        </div>
+                        <button type="button" style="float:right" class="btn btn-success" ng-click="n()">Add New Employee</button>
+                    </div>
+
+                </div>
+                <div class="col-md-12">
+                    <div class="pane">
+                        <h2 class="help"><span>Menu Help:</span></h2>
+                        <p> {{menuhelp}}</p>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="addnewemp1" class="btn btn-success" data-toggle="modal" data-target="#myModal" style="visibility:hidden">Add New Employee</button>
+            <button type="button" id="addnewemp" class="btn btn-success" data-toggle="modal" data-target="#myModal" style="visibility:hidden">Add</button>
+        </div><!-- container-fluid -->
+
+
+    </div>
+    <!-- CONTENT -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <div class="page-title" style="width:99%">
+                        <h1><b>User Management<label id="lbUsername" style="font-size:22px;color:#b3b3b3;"></label></b></h1>
+                    </div>
+                </div><!-- /modal-header -->
+
+                <div class="modal-body">
+                    <!--Basic detail -->
+                    <div class="col-sm-12">
+                        <div class="form-group col-sm-6">
+                            <label>First name</label>
+                            <input placeholder="First name" type="text" class="form-control" ng-model="emp.firstname">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Last name</label>
+                            <input placeholder="Last name" type="text" class="form-control" ng-model="emp.lastname">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Email</label>
+                            <input placeholder="Email" type="text" class="form-control" ng-model="emp.email">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Mobile</label>
+                            <input placeholder="Mobile" type="text" class="form-control" ng-model="emp.mobile">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Start date</label>
+                            <input jqdatepickeruserstartdate class="form-control" ng-model="emp.startdate" placeholder="mm/dd/yyyy" />
+
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>End date</label>
+                            <input jqdatepickeruserenddate class="form-control" ng-model="emp.enddate" placeholder="mm/dd/yyyy" />
+
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Company</label>
+
+                            <select ng-change="myFunc(emp.companyid)" ng-model="emp.companyid" ng-options="item.companyid as item.companyname for item in company" class="form-control"></select>
+
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>User name</label>
+                            <input placeholder="User name" type="text" class="form-control" ng-model="emp.username">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Password</label>
+                            <input placeholder="Password" type="text" class="form-control" ng-model="emp.password">
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Active</label>
+                            <!--<div class="form-switch">
+                                <label>
+                                    <input type="checkbox" class="switch-success" checked >
+                                </label>
+                            </div>-->
+                            <div style="margin-top:12px;">
+                                <label class="switch">
+                                    <input type="checkbox" ng-model="emp.active" data-ng-true-value="'t'">
+                                    <span class="slider round"></span>
+                                </label>
+
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label>User Image</label>
+                            <div class="input-sec" style="width:200px">
+                                <!--SHOW DIV WHEN THE NO IMAGE IS FOUND-->
+                                <div ng-show="WhenNoImageIsUploaded==true" style="background:#ccc; text-align:center; font-size:14px; font-weight:bold; text-transform:uppercase; width:120px; margin-bottom:10px; float:left; padding-top:40px; border-radius:10px; color:#666; height:120px;">
+                                    No Photo<br /> Available
+                                </div>
+                                <!--SHOW DIV WHEN THE IMAGE IS FOUND-->
+                                <div ng-show="WhenImageIsUploaded==true">
+                                    <img src="{{imageuploadURL}}{{emp.userimage}}" class="thumb" style="width:120px; border:1px solid #666; border-radius:5px; height:120px; margin-bottom:10px; float:left;" ng-src="{{stepsModel[0]}}" />
+                                </div>
+
+                                <div class="upload-img">
+                                    <label class="custom-file-upload cutmCls-Manager cutmCls-Counselor cutmCls-Admission btn btn-success">
+                                        <input type='file' class="k-button k-upload-button" accept="image/x-png,image/jpg,image/jpeg" ng-model-instant onchange="angular.element(this).scope().imageUpload(event)" />
+                                        Choose Image
+                                    </label>
+                                </div>
+                                <span ng-show="EFV_PPI_ImageUpload==true" class="errorctmMsg">Please Upload Image</span>
+                            </div>
+                        </div>
+
+
+
+
+                        <!--<div style="clear: both;"></div>
+                        <div style="float:right; margin:10px 0 0 0;"><button type="button" class="btn btn-success" ng-click="saveuser(emp)">Save</button></div>&nbsp;
+                        <div style="float:right; margin:10px 10px 0 0;"><button type="button" class="btn btn-success">Cancel</button></div>
+                        <div style="clear: both;"></div>-->
+                    </div>
+
+                    <!--Basic detail -->
+                    <!--Accordion -->
+                    <div class="col-sm-12">
+                        <div class="pane equal">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="" ng-click="showhidedeparment()" aria-expanded="true" aria-controls="collapseOne">
+                                                Department
+
+                                                <i class="more-less fa fa-minus pull-right" ng-show="departmentshow==true"></i>
+                                                <i class="more-less fa fa-plus pull-right" ng-show="departmentshow==false"></i>
+
+                                            </a>
+                                        </h4>
+                                    </div><!-- /panel-heading -->
+
+                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne" ng-show="departmentshow==true">
+                                        <div class="panel-body">
+                                            <div class="col-sm-6">
+                                                <div class="form-group col-sm-12">
+                                                    <label>Department</label>
+                                                    <select ng-change="departmentchange(emp.departmentid)" ng-model="emp.departmentid" ng-options="item.departmentid as item.department for item in department" class="form-control"></select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group col-sm-12">
+                                                    <label>Role</label>
+                                                    <ul class="list fa-ul" style="margin-left: 0px;border: solid;padding: 5px;border-color: lightgray;">
+                                                        <li><input id="select_all" class="chk" type="checkbox"> Select/Unselect all</li>
+                                                        <li ng-repeat="role in roles"><input name="sport" type="checkbox" class="chk" ng-checked="{{1==role.roleactive}}" ng-model="roles1" value="{{role.id}}"> {{role.label}}</li>
+
+                                                    </ul>
+
+                                                </div>
+                                                <!--<div style="clear: both;"></div>
+                                                <div style="float:right; margin:10px 0 0 0;"><button type="button" class="btn btn-success">Save</button></div>&nbsp;
+                                                <div style="float:right; margin:10px 10px 0 0;"><button type="button" class="btn btn-success">Cancel</button></div>
+                                                <div style="clear: both;"></div>-->
+                                            </div>
+                                        </div><!-- /panel-body -->
+                                    </div><!-- /panel-collapse -->
+                                </div><!-- /panel -->
+
+
+
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="Div3">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="" ng-click="showhidemenu()" aria-expanded="false" aria-controls="collapseMenu1">
+                                                Assign Menu To User
+                                                <i class="more-less fa fa-minus pull-right" ng-show="menushow==true"></i>
+                                                <i class="more-less fa fa-plus pull-right" ng-show="menushow==false"></i>
+                                            </a>
+                                        </h4>
+                                    </div><!-- /panel-heading -->
+
+                                    <div id="collapseMenu1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingMenu1" ng-show="menushow==true">
+                                        <div class="panel-body">
+
+                                            <tree-view checkbox ng-click="myClick(nodes)" id="treeviewnode1" class="assign-menu" model="nodesmenu"></tree-view>
+
+                                            <!--<div style="clear: both;"></div>
+                                            <div style="float:right; margin:10px 0 0 0;"><button type="button" class="btn btn-success">Save</button></div>&nbsp;
+                                            <div style="float:right; margin:10px 10px 0 0;"><button type="button" class="btn btn-success">Cancel</button></div>
+                                            <div style="clear: both;"></div>-->
+                                        </div><!-- /panel-body -->
+                                    </div><!-- /panel-collapse -->
+                                </div><!-- /panel -->
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingTwo">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="" ng-click="showhidetableau()" aria-expanded="false" aria-controls="collapseTwo">
+                                                Tableau
+                                                <i class="more-less fa fa-minus pull-right" ng-show="tableaushow==true"></i>
+                                                <i class="more-less fa fa-plus pull-right" ng-show="tableaushow==false"></i>
+                                            </a>
+                                        </h4>
+                                    </div><!-- /panel-heading -->
+
+                                    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo" ng-show="tableaushow==true">
+                                        <div class="panel-body">
+                                            <div class="col-sm-12">
+                                                <div class="form-group col-sm-6">
+                                                    <label>Tableau Type</label>
+                                                    <select name="tableaulicencetypes" ng-change="tableaulicencetypeschange(emp.tableaulicencetypeid)" ng-model="emp.tableaulicencetypeid" ng-options="item.tableaulicencetypeid as item.tableaulicencetype for item in tableaulicencetypes" class="form-control"></select>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label>Tableau key</label>
+                                                    <select name="tableaukey" ng-change="tableaulicencekeyschange(emp.tableaulicencedetailid)" ng-model="emp.tableaulicencedetailid" ng-options="item.tableaulicencedetailid as item.tableaukey for item in tableaulicencekeys" class="form-control"></select>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label>User name</label>
+                                                    <input placeholder="User name" ng-model="tableaudetail.username" type="text" class="form-control" ng-disabled="true">
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label>Password</label>
+                                                    <input placeholder="Password" type="text" ng-model="tableaudetail.password" class="form-control" ng-disabled="true">
+                                                </div>
+
+
+
+
+                                                <div class="form-group col-sm-6">
+                                                    <label>Start date</label>
+                                                    <input placeholder="Start date" type="text" ng-model="tableaudetail.startdate" class="form-control" ng-disabled="true">
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label>End date</label>
+                                                    <input placeholder="End date" type="text" ng-model="tableaudetail.enddate" class="form-control" ng-disabled="true">
+                                                </div>
+
+
+                                                <!--<div style="clear: both;"></div>
+                                                <div style="float:right; margin:10px 0 0 0;"><button type="button" class="btn btn-success">Save</button></div>&nbsp;
+                                                <div style="float:right; margin:10px 10px 0 0;"><button type="button" class="btn btn-success">Cancel</button></div>
+                                                <div style="clear: both;"></div>-->
+                                            </div>
+
+                                        </div><!-- /panel-body -->
+                                    </div><!-- /panel-collapse -->
+                                </div><!-- /panel -->
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingThree">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="" ng-click="showhidedashboard()" aria-expanded="false" aria-controls="collapseThree">
+                                                Dashboard
+                                                <i class="more-less fa fa-minus pull-right" ng-show="dashboardshow==true"></i>
+                                                <i class="more-less fa fa-plus pull-right" ng-show="dashboardshow==false"></i>
+                                            </a>
+                                        </h4>
+                                    </div><!-- /panel-heading -->
+
+                                    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree" ng-show="dashboardshow==true">
+                                        <div class="panel-body">
+
+                                            <div class="col-sm-12">
+                                                <div class="form-group col-sm-6">
+                                                    <label>Asign Dashboard</label>
+                                                    <tree-viewdashboard checkbox click="myClickdashboard(node)" model="nodes1"></tree-viewdashboard>
+
+                                                </div>
+                                                <!--<div style="clear: both;"></div>
+                                                <div style="float:right; margin:10px 0 0 0;"><button type="button" class="btn btn-success">Save</button></div>&nbsp;
+                                                <div style="float:right; margin:10px 10px 0 0;"><button type="button" class="btn btn-success">Cancel</button></div>
+                                                <div style="clear: both;"></div>-->
+                                            </div>
+                                        </div><!-- /panel-body -->
+                                    </div><!-- /panel-collapse -->
+                                </div><!-- /panel -->
+
+
+                            </div><!-- /panel-group -->
+
+                        </div><!-- pane -->
+                    </div>
+                    <!-- /tab -->
+                    <!--Accordion -->
+                </div><!-- /modal-body -->
+
+                <div class="modal-footer">
+                    <div style="clear: both;"></div>
+                    <div style="float:right; margin:10px 0 0 0;"><button type="button" class="btn btn-success" ng-click="saveuser(emp)">Save</button></div>&nbsp;
+                    <div style="float:right; margin:10px 10px 0 0;"><button type="button" id="modalclick" data-dismiss="modal" class="btn btn-success">Cancel</button></div>
+                    <div style="clear: both;"></div>
+                    <div class="col-md-3 pull-right alert alert-success" id="success-alert" style="padding-left:10px; position:fixed;right:10px; bottom:50px;">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        {{msgsuccess}}
+                    </div>
+                    <div class="col-md-3 pull-right alert alert-warning" id="success-warning" style="padding-left:10px; position:fixed;right:10px; bottom:50px;">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        {{msgwarning}}
+                    </div>
+                </div><!-- /modal-footer -->
+
+            </div><!-- /modal-content -->
+        </div><!-- /modal-dialog -->
+    </div><!-- /modal -->
+    <!--<div class="modal right fade" id="myModal1_2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1_2" aria-hidden="true" ng-show="showmodal==true">-->
+
+</div>
+<script src="vendor/plugins/form/switchery/switchery.min.js"></script>
+<script src="vendor/plugins/form/icheck/icheck.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        //ICHECK
+        debugger;
+
+
+
+
+
+
+
+
+        //var success = document.querySelector('.switch-success');
+        //var switchery = new Switchery(success, { color: '#16a085' });
+        //// Colors
+        ////var success1 = document.querySelector('.switch-success1');
+        ////var switchery = new Switchery(success1, { color: '#16a085' });
+
+        //debugger;
+        //var success = document.querySelector('.switch-success');
+        //  var color = $('#test10').css('background-color');
+        //alert(color);
+        //  var switchery = new Switchery(success, { color: color });
+        //  var selectedcolor = $("a").toggleClass("hover").css('background-color');
+        //  $('.btn-success').css("background-color", color);
+        //  $('.success.btn').css("background-color", color);
+        //  $('.btn-select').css("background-color", color);
+        //  $('.dropdown-menu').css("background-color", color);
+        //  $('.success .dropdown-menu > li > a').css("background-color", color);
+        //  $('a:hover').css("color", selectedcolor);
+        //  $('.more-less').css("color", color);
+
+
+
+        $('.rowcursor').click(function () {
+            debugger;
+            $('#modalclick').trigger('click');
+            $(this).addClass("selected").siblings().removeClass("selected");
+
+            var name = $(this).find('td')[2].innerHTML;
+            $('#lbUsername').html(name);
+            $('.dropdown-toggle').addClass("form-control");
+        });
+
+        $('.addbtn').click(function () {
+            debugger;
+            $('#modalclick').trigger('click');
+            $('#lbUsername').html('');
+
+        });
+
+
+        // alert(color);
+        //var selectedcolor = "#000";
+        //var switchery = new Switchery(success, { color: color });
+        ////SELECT
+        //$('.selectpicker').selectpicker({
+        //    style: 'btn-select',
+        //    size: 10,
+
+        //});
+        // SWITCH
+        // Classes
+
+
+    });
+
+</script>

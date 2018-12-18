@@ -1,0 +1,218 @@
+﻿<style type="text/css">
+    table tr.rowcursor {
+        cursor: pointer;
+    }
+
+    table tr.schedulealert {
+        cursor: pointer;
+    }
+
+    .selected {
+        background: lightgray;
+    }
+
+    .controlhide {
+        display: none;
+    }
+
+    .controlshow {
+        display: block;
+    }
+
+    .alertposition {
+        /* position: fixed;
+      bottom:0%;
+    margin-left:55%;*/
+        /*width:100%*/
+    }
+</style>
+<!-- DateTimePicker -->
+
+<!--<link href="vendor/plugins/form/datetimepicker/bootstrap-datetimepicker.css" rel="stylesheet">-->
+<link href="assets/css/ui.css" rel="stylesheet">
+<div ng-app="app" ng-controller="UserStatusController" class="">
+
+
+    <!-- CONTENT -->
+    <div id="content">
+        <div class="page-title">
+            <h1><b>Setting > Master > status</b></h1>
+        </div>
+       
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="pane equal" style="overflow:hidden;">
+                            <div class="form-group">
+
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search" ng-model="search">
+                                    <!--<span class="input-group-addon" ng-click="opensearchfilter()"><i class="fa fa-filter"></i></span>-->
+                                    <span class="input-group-addon" ng-click="searchme()"><i class="fa fa-search"></i></span>
+                                </div>
+                                <div style="float:right; margin:10px 0 0 0;"><button class="btn btn-success btn-block" ng-click="searchme()">Search</button></div>&nbsp;
+                                <div style="float:right; margin:10px 10px 0 0;"><button class="btn btn-success btn-block" ng-click="getstatus()">Clear</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- row -->
+
+                <button type="button" style="float:left;margin-bottom: 10px;" class="btn btn-success" ng-click="addEmployee()">Add</button>
+
+
+                <!--<button type="button" style="float:left;margin-bottom: 10px;" class="btn btn-info " ng-click="save()">Save</button>-->
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="pane equal" style="overflow:hidden;">
+                            <div class="table-responsive">
+                              
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="20">#</th>
+                                            <th>Status</th>
+                                            <th width="20">Active</th>
+                                            <th width="110">Sequence no</th>
+                                            <th width="175">Access Start Date</th>
+                                            <th width="175">Access End Date</th>
+                                            <th width="240">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr ng-repeat="emp in empoyees">
+                                            <td>{{$index+1}}</td>
+                                            <!--<td>
+
+
+                                                <input name="statusid{{$index}}" ng-model="emp.statusid"  ng-disabled="!enabledEdit[{{$index}}]" />
+                                                {{emp.statusid}}
+                                                </
+                                            </td>-->
+
+
+                                            <td>
+                                                <input name="status{{$index}}" class="form-control" ng-model="emp.userstatus" ng-disabled="!enabledEdit[{{$index}}]" />
+
+
+                                            </td>
+                                            <td>
+                                                <div style="margin-top:12px;">
+                                                    <label class="switch">
+                                                        <input type="checkbox" ng-disabled="!enabledEdit[{{$index}}]" ng-model="emp.active" data-ng-true-value="'t'">
+                                                        <span class="slider round"></span>
+                                                    </label>
+
+                                                </div>
+
+
+
+                                                <!--<input name="active{{$index}}" class="form-control" ng-model="emp.active" ng-disabled="!enabledEdit[{{$index}}]" />-->
+                                            </td>
+                                            <td>
+                                                <input name="sequenceno{{$index}}" class="form-control" ng-model="emp.sequenceno" ng-disabled="!enabledEdit[{{$index}}]" /></td>
+                                            <td>
+                                                 <input jqdatepicker1 class="form-control" ng-model="emp.accessstartdate" ng-disabled="!enabledEdit[{{$index}}]" placeholder="mm/dd/yyyy" />
+                                            </td>
+                                            <td>
+                                               <input  jqdatepicker class="form-control" ng-model="emp.accessenddate" ng-disabled="!enabledEdit[{{$index}}]"  placeholder="mm/dd/yyyy" />
+                                              </td>
+                                            <td>
+                                                <div class="buttons" ng-hide="editshow[$index]">
+                                                    <!--<button class="btn btn-primary" ng-click="editEmployee($index)">Edit</button>
+                        <button class="btn btn-danger" ng-click="deleteEmployee($index)">Delete</button>-->
+                                                    <button type="button" ng-click="editEmployee($index)" ng-hide="enabledEdit[$index]" class="btn btn-success">Edit</button>
+                                                    <button type="button" ng-click="update($index,emp)" ng-show="enabledEdit[$index]" class="btn btn-success">Update</button>
+                                                    <button type="button" ng-click="Cancel(tableData)" ng-show="enabledEdit[$index]" class="btn btn-success">Cancel</button>
+                                                </div>
+                                                <div class="buttons" ng-show="editshow[$index]">
+                                                    <button type="button" ng-click="update($index,emp)" class="btn btn-success">Save</button>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                               
+
+                                <div class="col-sm-12">
+                                    <div class="pane equal" style="text-decoration:overline;">
+                                        <i>  Menu Help : {{menuhelp}}</i>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!--////////////////////////////////////////////////////////////-->
+                <!--/////////////////////////////////////////////-->
+
+
+
+            </div><!-- container-fluid -->
+
+    </div><!-- content -->
+    <!-- CONTENT -->
+</div> 
+
+
+<script src="vendor/plugins/form/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="vendor/plugins/form/switchery/switchery.min.js"></script>
+<script src="vendor/plugins/form/icheck/icheck.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //ICHECK
+
+        debugger;
+        var success = document.querySelector('.switch-success');
+
+
+
+        var switchery = new Switchery(success, { color: '#16a085' });
+        // Colors
+
+        var success1 = document.querySelector('.switch-success1');
+        var switchery = new Switchery(success1, { color: '#16a085' });
+       //DATETIMEPICKER
+        //$(document).on("click", ".date", function () {
+ 
+        //  $(this).datetimepicker({
+        //        format: 'L'
+        //    });
+        //});
+        
+        $(function () {
+          
+            $('#date').datetimepicker({
+                format: 'L'
+            });
+            $('#date1').datetimepicker({
+                format: 'L'
+            });
+            $('#time').datetimepicker({
+                format: 'LT'
+            });
+
+            $('#date-time').datetimepicker({
+            });
+
+            $('#view-mode').datetimepicker({
+                viewMode: 'years'
+            });
+
+            $('#days-of-week').datetimepicker({
+                daysOfWeekDisabled: [0, 6]
+            });
+        });
+
+
+    });//END
+   
+
+</script>

@@ -1,0 +1,104 @@
+﻿<style type="text/css">
+    table tr.rowcursor {cursor: pointer;}
+    table tr.schedulealert {cursor: pointer;}
+    .selected {background: lightgray;}
+    .controlhide {display: none;}
+    .controlshow {display: block;}
+</style>
+
+<link href="assets/css/ui.css" rel="stylesheet">
+<div ng-controller="masterhelpdeskController" class="">
+    <div id="content">
+        <div class="page-title">
+            <h1><b>Master Help Desk</b></h1>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="pane equal" style="overflow:hidden;">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search" ng-model="search">
+                                <span class="input-group-addon" ng-click="searchme()"><i class="fa fa-search"></i></span>
+                            </div>
+                            <div style="float:right; margin:10px 0 0 0;"><button class="btn btn-success btn-block" ng-click="searchme()">Search</button></div>&nbsp;
+                            <div style="float:right; margin:10px 10px 0 0;"><button class="btn btn-success btn-block" ng-click="Cancel()">Clear</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="pane equal" style="overflow:hidden;">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>From User</th>
+                                        <th>Remark</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr ng-repeat="emp in helpdesk">
+                                        <td>{{$index+1}}</td>
+                                        <td><input class="form-control" name="remark{{$index}}" ng-model="emp.fromuser" ng-disabled="disable==1" /></td>
+                                        <td><input class="form-control" name="remark{{$index}}" ng-model="emp.remark" ng-disabled="disable==1" /></td>
+                                        <td><input class="form-control" name="status{{$index}}" ng-model="emp.status" ng-disabled="disable==1" /></td>
+                                        <td>
+                                            <div class="buttons" ng-hide="editshow[$index]">
+                                                <button type="button" ng-click="editEmployee($index)" ng-hide="enabledEdit[$index]" class="btn btn-success">Edit</button>
+                                                <button type="button" ng-click="update($index,emp)" ng-show="enabledEdit[$index]" class="btn btn-success">Update</button>
+                                                <button type="button" ng-click="Cancel(tableData)" ng-show="enabledEdit[$index]" class="btn btn-success">Cancel</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-sm-4">
+                                <div class="pane equal">
+                                    &nbsp;
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="pane equal" style="text-decoration:overline;">
+                                    <i>  Menu Help : {{menuhelp}}</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- content -->
+</div>
+<script src="vendor/plugins/form/switchery/switchery.min.js"></script>
+<script src="vendor/plugins/form/icheck/icheck.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //ICHECK
+
+        debugger;
+        var success = document.querySelector('.switch-success');
+
+
+
+        var switchery = new Switchery(success, { color: '#16a085' });
+        // Colors
+
+        var success1 = document.querySelector('.switch-success1');
+        var switchery = new Switchery(success1, { color: '#16a085' });
+
+
+
+    });//END
+
+
+</script>
+
+
+

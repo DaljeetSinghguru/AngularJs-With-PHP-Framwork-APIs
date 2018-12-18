@@ -1,0 +1,261 @@
+﻿<link href="assets/css/ui.css" rel="stylesheet">
+<div ng-controller="CompanyController" class="">
+
+
+    <!-- CONTENT -->
+    <div id="content">
+        <div class="page-title">
+            <h1><b>setting > Master > company</b></h1>
+        </div>
+        <div class="container-fluid">
+            <div class="col-md-12 ">
+                
+
+                <div class="row">
+                    
+
+                        <div class="pane equal" style="overflow:hidden;">
+                            <div class="table-responsive">
+
+                                <table class="table table-bordered table-striped table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th width="20">#</th>
+                                            <th>Company</th>
+                                            <th>Country</th>
+                                            <th>Address</th>
+                                            <th>Contact Person</th>
+                                            <th>Contact No</th>
+                                            <th>EmailId</th>
+                                            <th>Active</th>
+
+                                        </tr>
+                                    </thead>
+
+
+
+
+                                    <tbody>
+
+                                        <tr ng-repeat="emp in empoyees" class="rowclick" ng-click="showmodal((emp))">
+
+                                            <td class="oderlist">{{$index+1}}</td>
+                                            <!--<td>
+
+
+                                <input name="companyid{{$index}}" ng-model="emp.companyid"  ng-disabled="!enabledEdit[{{$index}}]" />
+
+
+                                {{emp.companyid}}
+                                </
+                            </td>-->
+
+
+                                            <td>
+                                                <input name="companyname{{$index}}" class="form-control" ng-model="emp.companyname" ng-disabled="!enabledEdit[{{$index}}]" />
+                                            </td>
+                                            <td>
+                                                <input name="country{{$index}}" class="form-control" ng-model="emp.country" ng-disabled="!enabledEdit[{{$index}}]" />
+                                            </td>
+                                            <td>
+                                                <input name="companyaddress{{$index}}" class="form-control" ng-model="emp.companyaddress" ng-disabled="!enabledEdit[{{$index}}]" />
+                                            </td>
+                                            
+                                            <td>
+                                                <input name="contactperson{{$index}}" class="form-control" ng-model="emp.contactperson" ng-disabled="!enabledEdit[{{$index}}]" />
+                                            </td>
+                                            <td>
+                                                <input name="contactno{{$index}}" class="form-control" ng-model="emp.contactno" ng-disabled="!enabledEdit[{{$index}}]" />
+                                            </td>
+                                            <td>
+                                                <input name="emailid{{$index}}" class="form-control" ng-model="emp.emailid" ng-disabled="!enabledEdit[{{$index}}]" />
+                                            </td>
+                                            <td>
+                                                <div style="margin-top:12px;">
+                                                    <label class="switch">
+                                                        <input type="checkbox" ng-disabled="!enabledEdit[{{$index}}]" ng-model="emp.active" data-ng-true-value="'t'">
+                                                        <span class="slider round"></span>
+                                                    </label>
+
+                                                </div>
+
+
+
+                                                <!--<input name="active{{$index}}" class="form-control" ng-model="emp.active" ng-disabled="!enabledEdit[{{$index}}]" />-->
+
+
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button type="button" style="float:right;margin-bottom: 10px;" class="btn btn-success rowclick" ng-click="addCompany()">Add</button>
+ </div>
+
+                        </div>
+
+                   
+                     
+                        <div class="pane">
+                            <h2 class="help"><span>Menu Help:</span></h2>
+                            <p> {{menuhelp}}</p>
+                        </div>
+                   
+                </div>
+
+
+                <!--////////////////////////////////////////////////////////////-->
+                <!--/////////////////////////////////////////////-->
+
+
+
+            </div><!-- container-fluid -->
+
+        </div><!-- content -->
+        <!-- CONTENT -->
+
+
+    </div>
+    <!-- modal -->
+    <div style="visibility: hidden;">
+        <a id="modalclick" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1_2"></a>
+    </div>
+    <div class="modal fade" id="myModal1_2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+
+        <div class="modal-dialog" style="width:70%">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button id="modulemodel" ng-click="closepopup()" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h1 class="modal-title" id="myModalLabel1_2">Company</h1>
+                </div><!-- /modal-header -->
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <strong><label>Company Name</label></strong>
+                            <input type="text" ng-model="companymodal.companyname" class="form-control" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <strong><label>Company Address</label></strong>
+                            <input type="text" ng-model="companymodal.companyaddress" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-6 ">
+                            <strong><label>Country</label></strong>
+                            <select ng-model="ddlcountry" class="form-control" ng-options="item.countryid as item.country for item in Countrys"></select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <strong><label>Contact Person</label></strong>
+                            <input type="text" ng-model="companymodal.contactperson" class="form-control" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <strong><label>Contact No</label></strong>
+                            <input type="text" ng-model="companymodal.contactno" class="form-control" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <strong><label>EmailId</label></strong>
+                            <input type="text" ng-model="companymodal.emailid" class="form-control" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <strong><label>Helpdesk EmailId</label></strong>
+                            <input type="text" ng-model="companymodal.helpdeskmailid" class="form-control" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <strong><label>Welcome Message</label></strong>
+                            <input type="text" ng-model="companymodal.welcomemessage" class="form-control" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <strong><label>Logo Url</label></strong>
+                            <input type="text" ng-model="companymodal.logourl" class="form-control" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <strong><label>Sequence No</label></strong>
+                            <input type="text" ng-model="companymodal.sequenceno" class="form-control" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <strong><label>Client</label></strong>
+                            <div style="margin-top:12px;">
+                                <label class="switch">
+                                    <input type="checkbox" ng-model="companymodal.client" data-ng-true-value="'t'">
+                                    <span class="slider round"></span>
+                                </label>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="col-md-4">
+                                <div class="sec">
+                                    <p><strong>Image</strong></p>
+
+                                    <!--<div class="k-widget k-upload k-header k-upload-sync k-upload-empty"><div class="k-button k-upload-button" aria-label="Select files..."><input name="files" id="files" type="file" aria-label="files" data-role="upload" multiple="multiple" autocomplete="off"><span>Select file</span></div></div>-->
+
+
+                                    <div class="input-sec" style="width:200px">
+                                        <!--SHOW DIV WHEN THE NO IMAGE IS FOUND-->
+                                        <div ng-show="WhenNoImageIsUploaded==true" style="background:#ccc; text-align:center; font-size:14px; font-weight:bold; text-transform:uppercase; width:120px; margin-bottom:10px; float:left; padding-top:40px; border-radius:10px; color:#666; height:120px;">
+                                            No Photo<br /> Available
+                                        </div>
+                                        <!--SHOW DIV WHEN THE IMAGE IS FOUND-->
+                                        <div ng-show="WhenImageIsUploaded==true">
+                                            <img src="{{companymodal.logourl}}" class="thumb" border:1px solid #666; border-radius:5px; margin-bottom:10px; float:left;" style="background-color:black;margin-bottom:15px" ng-src="{{stepsModel[0]}}" />
+                                        </div>
+
+                                        <div class="upload-img">
+                                            <label class="custom-file-upload cutmCls-Manager cutmCls-Counselor cutmCls-Admission btn btn-success">
+                                                <input type='file' class="k-button k-upload-button" accept="image/x-png,image/jpg,image/jpeg" ng-model-instant onchange="angular.element(this).scope().imageUpload(event)" />
+                                                Choose Image
+                                            </label>
+                                        </div>
+                                        <span ng-show="EFV_PPI_ImageUpload==true" class="errorctmMsg">Please Upload Image</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-12">
+                            <button type="button" style="float:right;margin-left:20px" data-dismiss="modal" class="btn btn-success ">Cancel </button>
+                            <input type="button" style="float:right" value="Update" class="btn btn-success" ng-click="SaveCompnay()">
+
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3 pull-right alert alert-success" id="success-alert" style="padding-left:10px; position:fixed;right:10px; bottom:50px;">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        {{msgsuccess}}
+                    </div>
+                    <div class="col-md-3 pull-right alert alert-warning" id="success-warning" style="padding-left:10px; position:fixed;right:10px; bottom:50px;">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        {{msgwarning}}
+                    </div>
+
+                </div><!-- /modal-body -->
+
+            </div><!-- /modal-content -->
+        </div><!-- /modal-dialog -->
+    </div>
+    <!-- modal -->
+
+    <script type="text/javascript">
+        //$(document).on("click", ".rowclick", function () {
+        //    $('#modalclick').trigger('click');
+        //});
+        function call_alert_info(Id) {
+            $("#" + Id).fadeIn(1000);
+            setTimeout(function () {
+                $("#" + Id).fadeOut(6000);
+            }, 2000);
+
+
+        }
+
+        function call_alert_success(Id) {
+            $("#" + Id).fadeIn(1000);
+            setTimeout(function () {
+                $("#" + Id).fadeOut(6000);
+            }, 2000);
+        }
+    </script>
+</div> 

@@ -1,0 +1,167 @@
+﻿
+<style type="text/css">
+    
+
+     
+    .app-logo img {
+        width:20%;
+    }
+
+    .member-container {
+        margin-bottom:0;
+    }
+    input[type="text"] {
+        font-family: Arial, Helvetica, sans-serif !important;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        padding: 20px;
+        margin: 10px 0;
+        width: 100%;
+        box-sizing: border-box;
+        color: #333;
+        font-size: 14px;
+    }
+
+    input[type="password"] {
+        font-family: Arial, Helvetica, sans-serif !important;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        padding: 20px;
+        margin: 10px 0;
+        width: 100%;
+        box-sizing: border-box;
+        color: #333;
+        font-size: 14px;
+    }
+
+    input[type="submit"] {
+        font-family: Arial, Helvetica, sans-serif !important;
+        background: #16a085;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        padding: 15px;
+        width: 170px;
+        color: #ffffff !important;
+        box-sizing: border-box;
+        color: #333;
+        font-size: 16px;
+        cursor: pointer;
+        margin: 10px auto;
+        display: block;
+         
+    }
+
+    a {
+        color: #fff;
+        text-decoration: none;
+        text-align: center;
+        display: block;
+        margin: 0 0 10px 0;
+    }
+        a:hover {
+            color:#fff;
+        }
+
+    @media only screen and (max-width:768px) {
+        .container {
+            width: 100%;
+            box-sizing: border-box;
+        }
+    }
+</style>
+<div class="wrapper" ng-controller="loginController">
+
+    <div class="member-container">
+        <div class="app-logo">
+            <a href="https://www.mindvalley.com/">
+                <img id="companylogo" alt="Mindvalley Logo" />
+            </a><div class="text-white">Accounts Datawarehouse and Dashboard System</div>
+        </div><!-- app-logo -->
+ <div class="member-container-inside">
+     <form>
+         <div class="form-group">
+             <input type="text" id="txtName" placeholder="Username" value="admin">
+         </div>
+
+         <div class="form-group">
+             <input type="password" id="txtpassword" placeholder="Password" value="password">
+         </div>
+
+         <div class="form-group">
+
+             <!--<a href="" id="btn" class="btn btn-success btn-block">Login</a>-->
+             <input type="submit" id="btn" value="Login" />
+             <a href="index.html#/forgotpassword">Forget Password</a>
+         </div>
+         <div ng-show="checkconnection" class="error-msg">{{systemdownmessage}}</div>
+     </form>
+
+        </div><!-- member-container-inside -->
+ <div  style="text-align:center; color:#fff; position:relative;  width:100%; font-size:12px; margin:50px 0;">
+     <span id="footermessage" style="color:#fff;"></span>
+     <!--The website is best experienced on the version of Chrome, Firefox, Safari and Internet Explorer browsers or higher-->
+     <br /><small><span id="footermessage2" style="color:#fff;"></span></small>
+ </div>
+
+    </div><!-- member-container -->
+    
+</div>
+
+ 
+
+
+<script type="text/javascript">
+    "use strict";
+    /*******************************
+    PAGE PRELOADER
+    *******************************/
+    $(window).load(function () { // makes sure the whole site is loaded
+        $('#status').fadeOut("slow"); // will first fade out the loading animation
+        $('#preloader').fadeOut("slow"); // will fade out the white DIV that covers the website.
+        $('body').delay(350).css({ 'overflow': 'visible' });
+    })
+
+
+    //$(document).ready(function () {
+    //
+    //       });
+
+    $(document).ready(function () {
+       
+        localStorage.clear();
+        //var data = {};
+        //$.post('http://192.168.1.234/team/index.php/web_api/getcompanylogo', data, function (msg) {
+        //    debugger
+        //    if (msg.getcompanylogo[0] != "")
+        //    {
+        //        // set user id into localstorage
+        //        // msg.data[0].loginuserid;
+        //        localStorage.setItem("logourl", msg.getcompanylogo[0].flogourl);
+        //        localStorage.setItem("footermessage2", msg.getcompanylogo[0].ffootermessage2);
+        //        $('#footermessage2').html(msg.getcompanylogo[0].ffootermessage2);
+        //        var logourl = 'assets/img/core/' + msg.getcompanylogo[0].flogourl;
+        //        $("#companylogo").attr("src", logourl);
+        //   }
+        //});
+
+        localStorage.removeItem('LocalStorageKey');
+        var ulEmployees = $('#ulEmployees');
+
+
+
+
+        $('btnClear').click(function () {
+            ulEmployeess.empty();
+        });
+
+    });
+    /*******************************
+    THEME COLOR COOKIE
+    *******************************/
+    if ($.cookie("css")) {
+        $("#theme").attr("href", $.cookie("css"));
+    }
+</script>

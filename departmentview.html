@@ -1,0 +1,136 @@
+﻿
+<link href="assets/css/ui.css" rel="stylesheet">
+<div ng-controller="departmentController" class="">
+
+
+    <!-- CONTENT -->
+    <div id="content">
+        <div class="page-title">
+            <h1><b>Setting > Master > DEPARTMENT</b></h1>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="pane equal" style="overflow:hidden;">
+
+                        <div class="form-group">
+                            <div class="col-md-10 nopadding">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search" ng-model="search">
+                                    <!--<span class="input-group-addon" ng-click="opensearchfilter()"><i class="fa fa-filter"></i></span>-->
+                                    <span class="input-group-addon" ng-click="searchme()"><i class="fa fa-search"></i></span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-2 nopadding">
+                                <div style="float:left; margin:0px 0 0 10px;"><button style="height:40px;" class="btn btn-success btn-block" ng-click="searchme()">Search</button></div>&nbsp;
+                                <div style="float:left; margin:0px 0 0 10px;"><button style="height:40px;" class="btn btn-success btn-block" ng-click="getdepartment()">Clear</button></div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- row -->
+            <!--<button type="button" style="float:left;margin-bottom: 10px;" class="btn btn-info " ng-click="save()">Save</button>-->
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="pane equal" style="overflow:hidden;">
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th width="35">#</th>
+                                        <th>Department</th>
+                                        <th width="20">Active</th>
+                                        <th width="120">Sequence no</th>
+                                        <th width="200">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr ng-repeat="emp in empoyees">
+                                        <td class="oderlist">{{$index+1}}</td>
+
+                                        <!--<td>
+
+
+                  <input name="departmentid{{$index}}" ng-model="emp.departmentid"  ng-disabled="!enabledEdit[{{$index}}]" />
+                {{emp.departmentid}}
+                </
+            </td>-->
+
+
+                                        <td>
+                                            <input name="department{{$index}}" class="form-control" ng-model="emp.department" ng-disabled="!enabledEdit[{{$index}}]" />
+
+
+                                        </td>
+                                        <td>
+                                            <div style="margin-top:12px;">
+                                                <label class="switch">
+                                                    <input type="checkbox" ng-disabled="!enabledEdit[{{$index}}]" ng-model="emp.active" data-ng-true-value="'t'">
+                                                    <span class="slider round"></span>
+                                                </label>
+
+                                            </div>
+
+                                            <!--<input name="active{{$index}}" class="form-control" ng-model="emp.active" ng-disabled="!enabledEdit[{{$index}}]" />-->
+                                        </td>
+                                        <td>
+                                            <input name="sequenceno{{$index}}" class="form-control" ng-model="emp.sequenceno" ng-disabled="!enabledEdit[{{$index}}]" />
+                                        </td>
+
+
+                                        <td class="editbtn">
+                                            <div class="buttons" ng-hide="editshow[$index]">
+                                                <!--<button class="btn btn-primary" ng-click="editEmployee($index)">Edit</button>
+                    <button class="btn btn-danger" ng-click="deleteEmployee($index)">Delete</button>-->
+                                                <button type="button" ng-click="editEmployee($index)" ng-hide="enabledEdit[$index]" class="btn btn-success">Edit</button>
+                                                <button type="button" ng-click="update($index,emp)" ng-show="enabledEdit[$index]" class="btn btn-success">Update</button>
+                                                <button type="button" ng-click="Cancel($index)" ng-show="enabledEdit[$index]" class="btn btn-success">Cancel</button>
+                                            </div>
+                                            <div class="buttons" ng-show="editshow[$index]">
+                                                <button type="button" ng-click="update($index,emp)" class="btn btn-success">Save</button>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="button" style="float:right;margin-bottom: 10px;" class="btn btn-success" ng-click="addEmployee()">Add</button>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+                        <div class="pane">
+                            <h2 class="help"><span>Menu Help:</span></h2>
+                            <p> {{menuhelp}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 pull-right alert alert-success" id="success-alert" style="padding-left:10px; position:fixed;right:10px; bottom:50px;">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                {{msgsuccess}}
+            </div>
+            <div class="col-md-3 pull-right alert alert-warning" id="success-warning" style="padding-left:10px; position:fixed;right:10px; bottom:50px;">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                {{msgwarning}}
+            </div><!--////////////////////////////////////////////////////////////-->
+            <!--/////////////////////////////////////////////-->
+
+
+
+        </div><!-- container-fluid -->
+
+    </div><!-- content -->
+    <!-- CONTENT -->
+
+
+</div>

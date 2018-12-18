@@ -1,0 +1,103 @@
+﻿<style type="text/css">
+    #container, #product-details {
+        display: inline-block;
+    }
+
+    #product-details {
+        vertical-align: top;
+        width: 400px;
+        height: 420px;
+        margin-left: 20px;
+    }
+
+        #product-details > img {
+            border: none;
+            height: 300px;
+            width: 400px;
+        }
+
+        #product-details > .name {
+            text-align: center;
+            font-size: 20px;
+        }
+
+        #product-details > .price {
+            text-align: center;
+            font-size: 24px;
+        }
+
+    .dark #product-details > div {
+        color: #f0f0f0;
+    }
+
+    .hidden {
+        visibility: hidden;
+    }
+
+    .vakata-context {
+        z-index: 999 !important;
+    }
+</style>
+
+<div ng-controller="menuController" class="">
+    <!-- CONTENT -->
+    <div id="content" class="dx-viewport">
+        <div class="page-title">
+            <h1><b>Menu</b></h1>
+        </div>
+        <div class="form">
+            <div id="container">
+                <ul>
+                    <li data-jstree='{"opened":true}'>
+                    </li>
+                </ul>
+            </div>
+            <div id="product-details" ng-if="productId">
+                Parent MENU selected : <div class="name">{{parentmenu}}</div>
+                Parent Menu Id:<div class="name">{{parentmenuid}}</div>
+                Menu Id:<div class="name">{{menuid}}</div>
+                Active: <div class="name">{{active}}</div>
+                Description:<div class="name">{{text}}</div>
+                Sequence No:<div class="name">{{sequenceno}}</div>
+                Page Name:<div class="name">{{pagename}}</div>
+                Help:<div class="name">{{help}}</div>
+                Icon:<div class="name">{{icon}}</div>
+
+
+                <button type="button" ng-click="editmenu()" class="btn btn-success">Edit</button>
+                <button type="button" ng-click="addchild()" class="btn btn-success">Add Child Menu</button>
+                <button type="button" ng-click="addsamelevel()" class="btn btn-success">Add Same level Menu</button>
+            </div>
+            <div id="product-details" ng-show="addchildclicked==true">
+                <div class="name">
+                    <span> {{textontop}}</span>
+                </div>
+                Parent MENU selected : <div class="name">{{parentmenu}}</div>
+                Parent Menu Id:<div class="name">{{parentmenuid}}</div>
+                Menu Id:<div class="name">{{menuid}}</div>
+                Active: <div class="name">{{active}}</div>
+                Description:<div class="name"><input type="text" ng-model="menu.description" /></div>
+                Sequence No:<div class="name"><input type="text" ng-model="menu.sequenceno" /></div>
+                Page Name:<div class="name"><input type="text" ng-model="menu.pagename" /></div>
+                Help:<div class="name"><input type="text" ng-model="menu.help" /></div>
+                Icon:<div class="name"><input type="text" ng-model="menu.icon" /></div>
+
+
+                <button type="button" ng-click="Savemenu(tableData)" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="vendor/plugins/form/switchery/switchery.min.js"></script>
+<script src="vendor/plugins/form/icheck/icheck.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //ICHECK
+        debugger;
+        var success = document.querySelector('.switch-success');
+        var switchery = new Switchery(success, { color: '#16a085' });
+        // Colors
+        var success1 = document.querySelector('.switch-success1');
+        var switchery = new Switchery(success1, { color: '#16a085' });
+    });//END
+</script>

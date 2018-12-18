@@ -1,0 +1,108 @@
+﻿
+<div ng-controller="MessageController" class="">
+
+
+    <!-- CONTENT -->
+    <div id="content">
+        <div class="page-title">
+            <h1><b>Message</b></h1>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="pane equal" style="overflow:hidden;">
+                        <div class="form-group">
+                            <div class="col-md-10 nopadding">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search" ng-model="search">
+                                    <!--<span class="input-group-addon" ng-click="opensearchfilter()"><i class="fa fa-filter"></i></span>-->
+                                    <span class="input-group-addon" ng-click="searchme()"><i class="fa fa-search"></i></span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-2 nopadding">
+                                <div style="float:left; margin:0px 0 0 10px;"><button style="height:40px;" class="btn btn-success btn-block" ng-click="searchme()">Search</button></div>&nbsp;
+                                <div style="float:left; margin:0px 0 0 10px;"><button style="height:40px;" class="btn btn-success btn-block" ng-click="getmessage()">Clear</button></div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- row -->
+
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="pane equal" style="overflow:hidden;">
+                        <div class="table-responsive">
+
+
+                            <div ng-repeat="emp in empoyees">
+
+                                <div class="col-lg-4">
+                                    <div class="msg-view">
+                                        <ul>
+                                            <li>
+                                                <strong><label>Message Type : </label></strong>
+                                                {{emp.messagetype}}
+                                            </li>
+                                            <li>
+                                                <strong><label>From User : </label></strong>
+                                                {{emp.fromuser}}
+                                            </li>
+                                            <li>
+                                                <strong><label>Date : </label></strong>
+                                                {{emp.createdate}}
+                                            </li>
+                                            <li>
+
+                                                <strong><label>Message : </label></strong>
+                                                {{emp.message}}
+                                            </li>
+
+                                            <li>
+                                                <strong><label>Read :</label></strong>
+                                                <label class="switch">
+                                                    <input type="checkbox" ng-model="emp.active" ng-disabled="emp.active" ng-change="update($index,emp)" data-ng-true-value="'t'">
+                                                    <span class="slider round"></span>
+                                                </label>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="col-md-12">
+                    <div class="pane">
+                        <h2 class="help"><span>Menu Help:</span></h2>
+                        <p> {{menuhelp}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 pull-right alert alert-success" id="success-alert" style="padding-left:10px; position:fixed;right:10px; bottom:50px;">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                {{msgsuccess}}
+            </div>
+            <div class="col-md-3 pull-right alert alert-warning" id="success-warning" style="padding-left:10px; position:fixed;right:10px; bottom:50px;">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                {{msgwarning}}
+            </div>
+
+
+        </div><!-- container-fluid -->
+
+    </div><!-- content -->
+    <!-- CONTENT -->
+
+
+</div>
+

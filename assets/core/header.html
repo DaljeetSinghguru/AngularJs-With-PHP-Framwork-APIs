@@ -1,0 +1,34 @@
+<nav class="header-navbar">
+    <div class="navbar-header clearfix">
+        <a class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mini-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span> <i class="fa fa-plus"></i>
+        </a>
+        <a class="logo pull-left" style="text-align:center" target="_blank" href="https://www.mindvalley.com/"> <img id="logoimage" height="60%" width="60%" alt="Mindvalley Logo"> </a>
+        <a class="sidebar-switch pull-right"><span class="fa fa-bars"></span></a>
+    </div>
+    <div class="collapse navbar-collapse" id="mini-navbar-collapse">
+        <form class="navbar-form navbar-left" role="search">
+            <div style="color:#fff; font-size:16px; font-weight:bold; line-height:32px">
+                <span id="divheader"></span>
+
+            </div>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+
+
+           
+            <li class="turn-off"><a href="index.html#/login"> <i class="fa fa-power-off logout"></i> <span></span> </a></li>
+        </ul>
+    </div>
+</nav>
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        $('#divheader').html(localStorage["headermessage"]);
+        //var logourl = 'assets/img/core/' + localStorage["logourl"];
+        var logourl = localStorage["logourl"];
+        $("#logoimage").attr("src", logourl);
+    });
+</script>
+
+

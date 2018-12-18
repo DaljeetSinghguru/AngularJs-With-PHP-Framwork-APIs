@@ -1,0 +1,615 @@
+﻿
+<link href="assets/css/ui.css" rel="stylesheet">
+<div ng-controller="ModuleschedulerController" class="">
+
+    <!-- CONTENT -->
+    <div id="content">
+        <div class="page-title">
+            <h1><b>Setting > Scheduler > Scheduler Configuration</b></h1>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="pane equal" style="overflow:hidden;">
+                        <div class="form-group">
+                            <div class="col-md-10 nopadding">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search" ng-model="search">
+                                    <!--<span class="input-group-addon" ng-click="opensearchfilter()"><i class="fa fa-filter"></i></span>-->
+                                    <span class="input-group-addon" ng-click="searchme()"><i class="fa fa-search"></i></span>
+
+                                </div>
+                            </div>
+                            <div class="col-md-2 nopadding">
+                                <div style="float:left; margin:0px 0 0 10px;"><button style="height:40px;" class="btn btn-success btn-block" ng-click="searchme()">Search</button></div>&nbsp;
+                                <div style="float:left; margin:0px 0 0 10px;"><button style="height:40px;" class="btn btn-success btn-block" ng-click="getmodulescheduler()">Clear</button></div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- row -->
+            <!--<button type="button" style="float:left;margin-bottom: 10px;" class="btn btn-info " ng-click="save()">Save</button>-->
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="pane equal" style="overflow:hidden;">
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th width="20">#</th>
+                                      <th>Module Scheduler</th>
+                                        <th width="150">Module</th>
+                                        <th width="150">Server Ip</th>
+                                        <th width="150">Dependency</th>
+                                        <th width="130">Last Sync</th>
+                                        <th width="80">Synched</th>
+                                        <th width="80">Active</th>
+                                        <th width="80">Action</th>
+                                    </tr>
+                                </thead>
+
+
+
+
+                                <tbody>
+
+                                    <tr ng-repeat="emp in empoyees" >
+                                        <td class="oderlist">
+                                            {{$index+1}}
+                                        </td>
+                                        <!--<td>
+        {{emp.departmentrolesid}}
+        </
+    </td>-->                                        
+                                        <td ng-click="showmodal($index,emp)"><input type="text" class="form-control" ng-model="emp.schedulername" ng-disabled="!enabledEdit[{{$index}}]" /></td>
+                                        <td>
+                                            <select name="module{{$index}}" ng-model="emp.modulesid" ng-options="item.modulesid as item.modules for item in ddldata" class="form-control" ng-disabled="!enabledEdit[{{$index}}]"></select>
+                                        </td>
+                                        <td><input type="text" class="form-control" ng-model="emp.moduleserverip" ng-disabled="!enabledEdit[{{$index}}]" /></td>
+                                        <td>
+                                            <select name="dependencymodule{{$index}}" ng-model="emp.dependencymoduleid" ng-options="item.modulesid as item.modules for item in ddldata" class="form-control" ng-disabled="!enabledEdit[{{$index}}]"></select>
+                                        </td>
+                                        <td>
+                                            <input name="lastsyncdate{{$index}}" class="form-control" ng-model="emp.lastsyncdate" ng-disabled="true" />
+                                        </td>
+                                        <td>
+                                            <div style="margin-top:12px;">
+                                                <label class="switch">
+                                                    <input type="checkbox" ng-disabled="true" ng-model="emp.synched" data-ng-true-value="'t'">
+                                                    <span class="slider round"></span>
+                                                </label>
+
+                                            </div>
+
+                                        </td>
+
+
+                                        <td>
+                                            <div style="margin-top:12px;">
+                                                <label class="switch">
+                                                    <input type="checkbox" ng-disabled="!enabledEdit[{{$index}}]" ng-model="emp.active" data-ng-true-value="'t'">
+                                                    <span class="slider round"></span>
+                                                </label>
+
+                                            </div>
+
+                                        </td>
+                                        <td class="editbtn">
+                                            <div class="buttons" ng-hide="editshow[$index]">
+                                                <!--<button class="btn btn-primary" ng-click="editEmployee($index)">Edit</button>
+            <button class="btn btn-danger" ng-click="deleteEmployee($index)">Delete</button>-->
+                                                <button type="button" ng-click="editEmployee($index)" ng-hide="enabledEdit[$index]" class="btn btn-success">Edit</button>
+                                                <button type="button" ng-click="update($index,emp)" ng-show="enabledEdit[$index]" class="btn btn-success">Update</button>
+                                                <button type="button" ng-click="Cancel($index)" ng-show="enabledEdit[$index]" class="btn btn-success">Cancel</button>
+                                            </div>
+                                            <div class="buttons" ng-show="editshow[$index]">
+                                                <button type="button" ng-click="update($index,emp)" class="btn btn-success">Save</button>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="button" style="float:right;margin-bottom: 10px;" class="btn btn-success" ng-click="addEmployee()">Add</button>
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-md-12">
+                    <div class="pane">
+                        <h2 class="help"><span>Menu Help:</span></h2>
+                        <p> {{menuhelp}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 pull-right alert alert-success" id="success-alert" style="padding-left:10px; position:fixed;right:10px; bottom:50px;">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                {{msgsuccess}}
+            </div>
+            <div class="col-md-3 pull-right alert alert-warning" id="success-warning" style="padding-left:10px; position:fixed;right:10px; bottom:50px;">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                {{msgwarning}}
+            </div>
+
+            <!--////////////////////////////////////////////////////////////-->
+            <!--/////////////////////////////////////////////-->
+
+
+
+        </div><!-- container-fluid -->
+
+    </div><!-- content -->
+    <!-- CONTENT -->
+    <!-- modal -->
+    <div style="visibility: hidden;">
+        <a id="modalclick" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1_2"></a>
+  </div>
+    <!--<div class="modal right fade" id="myModal1_2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1_2" aria-hidden="true">-->
+    <div class="modal fade" id="myModal1_2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+        <div class="modal-dialog" style="width:70%">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button id="modulemodel" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                    <!--<div class="page-title">-->
+                    <h7><b>Setting > Scheduler > Scheduler Configuration > Scheduler {{schedulername}}</b></h7>
+                    <!--</div>-->
+                </div><!-- /modal-header -->
+
+                <div class="modal-body">
+
+                    <div role="tabpanel">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a id="schedulertab" href="modulescheduler#scheduler" aria-controls="scheduler" role="tab" data-toggle="tab">Sechedule</a></li>
+                            <li role="presentation"><a ng-click="alertmodel()" href="modulescheduler#alertSetting" aria-controls="alertSetting" role="tab" data-toggle="tab">Alert setting</a></li>
+                            <li role="presentation"><a ng-click="scheduerhistory()" href="modulescheduler#schedulerhistory" aria-controls="schedulerhistory" role="tab" data-toggle="tab">History</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <!--start scheduler -->
+                            <div role="tabpanel" class="tab-pane fade in active" id="scheduler">
+                                <p>
+                                    <div class="row">
+
+                                        <div class="col-sm-12">
+                                            <div class="pane equal">
+
+                                                <div class="form-group">
+                                                    <label for="Occurs">Occurs</label>
+                                                    <select name="scheduleroccurs1" ng-model="scheduler.scheduleroccurid" ng-options="itemc.scheduleroccursid as itemc.scheduleroccurs for itemc in ddlscheduleroccurs" class="form-control"></select>
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="recursevery">Recurs every</label>
+                                                    <input type="number" class="form-control" id="Number1" name="recursevery" placeholder="Recurs every" ng-model="scheduler.recursevery">
+                                                </div>
+
+                                                <label>Days</label>
+                                                <div class="form-group">
+
+                                                    <div class="col-lg-12 nopadding">
+                                                        <div class="col-lg-1 nopadding">
+                                                            <div><label>Monday</label></div>
+                                                            <div>
+                                                                <label class="switch">
+                                                                    <input type="checkbox" ng-model="scheduler.monday" data-ng-true-value="'t'">
+                                                                    <span class="slider round"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-1">
+                                                            <div>
+                                                                <label>Tuesday</label>
+                                                            </div>
+                                                            <div>
+                                                                <label class="switch">
+                                                                    <input type="checkbox" ng-model="scheduler.tuesday" data-ng-true-value="'t'">
+                                                                    <span class="slider round"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-1">
+                                                            <div><label>Wednesday</label></div>
+                                                            <div>
+                                                                <label class="switch">
+                                                                    <input type="checkbox" ng-model="scheduler.wednesday" data-ng-true-value="'t'">
+                                                                    <span class="slider round"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-1">
+                                                            <div><label>Thursday</label></div>
+                                                            <label class="switch">
+                                                                <input type="checkbox" ng-model="scheduler.thursday" data-ng-true-value="'t'">
+                                                                <span class="slider round"></span>
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="col-lg-1">
+                                                            <div><label>Friday</label></div>
+                                                            <label class="switch">
+                                                                <input type="checkbox" ng-model="scheduler.friday" data-ng-true-value="'t'">
+                                                                <span class="slider round"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-1">
+                                                            <div><label>Saturday</label></div>
+                                                            <label class="switch">
+                                                                <input type="checkbox" ng-model="scheduler.saturday" data-ng-true-value="'t'">
+                                                                <span class="slider round"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-1">
+                                                            <div><label>Sunday</label></div>
+                                                            <label class="switch">
+                                                                <input type="checkbox" ng-model="scheduler.sunday" data-ng-true-value="'t'">
+                                                                <span class="slider round"></span>
+                                                            </label>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label style="margin-top:15px" for="Time">Time</label>
+                                                    <div style="clear: both;"></div>
+                                                    <input ng-model="scheduler.hour" type="number" min="0" max="24" class="form-control" id="Number2" name="Hour" placeholder="HH" style="float:left;padding:4px !important; border:1px solid #eee;width:80px">
+                                                    <input ng-model="scheduler.minute" type="number" min="0" max="60" class="form-control" id="Number3" name="Minute" placeholder="MM" style="float:left;padding:4px !important; border:1px solid #eee;width:80px">
+                                                    <!--<div style="float:left;width:80px !important">
+                                        <select class="selectpicker success">
+
+                                        <option selected>Am</option>
+                                        <option>Pm</option>
+                                        </select>
+                                        </div>-->
+                                                </div>
+                                                <div style="clear: both;"></div>
+                                                <div class="form-group">
+                                                    <label style="margin-top:15px" for="Crontab">Crontab syntax</label><br />
+                                                    <input placeholder="Crontab syntax" id="Crontab" style="padding:4px !important; border:1px solid #eee;width:100%" ng-model="scheduler.crontabsyntax" class="form-control">
+
+                                                </div>
+                                                <div class="form-group" style="display:none">
+                                                    <label style="margin-top:15px" for="Command">Execute command</label><br />
+                                                    <input placeholder="Execute command" id="Command" style="padding:4px !important; border:1px solid #eee;width:100%" ng-model="scheduler.command" class="form-control">
+
+                                                </div>
+                                                <div>
+                                                    <label>Active</label>
+                                                    <label class="switch">
+                                                        <input type="checkbox" ng-model="scheduler.active" data-ng-true-value="'t'">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </div>
+                                                <div style="clear: both;"></div>
+                                                <div style="float:right; margin:10px 10px 0 0;"><button type="button" data-dismiss="modal" class="btn btn-success" style="margin-left:20px">Cancel</button></div>
+                                                <div style="float:right; margin:10px 0 0 0;"><button type="button" ng-click="schedulersave()" class="btn btn-success">Save</button></div>&nbsp;
+
+
+
+
+
+
+                                            </div><!-- pane -->
+                                        </div><!-- col -->
+
+                                    </div>
+                                </p>
+                            </div>
+
+                            <!-- / end scheduler -->
+                            <!--start alertsetting -->
+                            <div role="tabpanel" class="tab-pane fade" id="alertSetting">
+                                <p>
+                                    <div class="table-responsive">
+
+                                        <table class="table table-bordered table-striped table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th width="20">#</th>
+                                                    <th width="350">Company</th>
+                                                    <th width="350">User</th>
+                                                    <th width="150">Email</th>
+                                                    <th width="150">Notification</th>
+                                                    <th width="150">SMS</th>
+                                                    <th width="150">Active</th>
+                                                    <th width="150">Action</th>
+                                                </tr>
+                                            </thead>
+
+
+
+
+                                            <tbody>
+
+                                                <tr ng-repeat="alert in alertdata">
+                                                    <td class="oderlist">{{$index+1}}</td>
+                                                    <!--<td>
+                                            {{emp.departmentrolesid}}
+                                            </
+                                        </td>-->
+                                                    <td>
+                                                        <select name="company{{$index}}" ng-model="alert.companyid" ng-options="item.companyid as item.companyname for item in compnaydata" class="form-control" ng-disabled="!alertenabledEdit[{{$index}}]"></select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="users{{$index}}" ng-model="alert.userid" ng-options="item.userid as item.username for item in userdata" class="form-control" ng-disabled="!alertenabledEdit[{{$index}}]"></select>
+                                                    </td>
+                                                    <td>
+                                                        <div style="margin-top:12px;">
+                                                            <label class="switch">
+                                                                <input type="checkbox" ng-disabled="!alertenabledEdit[{{$index}}]" ng-model="alert.email" data-ng-true-value="'t'">
+                                                                <span class="slider round"></span>
+                                                            </label>
+
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div style="margin-top:12px;">
+                                                            <label class="switch">
+                                                                <input type="checkbox" ng-disabled="!alertenabledEdit[{{$index}}]" ng-model="alert.notification" data-ng-true-value="'t'">
+                                                                <span class="slider round"></span>
+                                                            </label>
+
+                                                        </div>
+                                                    <td>
+                                                        <div style="margin-top:12px;">
+                                                            <label class="switch">
+                                                                <input type="checkbox" ng-disabled="!alertenabledEdit[{{$index}}]" ng-model="alert.sms" data-ng-true-value="'t'">
+                                                                <span class="slider round"></span>
+                                                            </label>
+
+                                                        </div>
+
+                                                    </td>
+
+
+                                                    <td>
+                                                        <div style="margin-top:12px;">
+                                                            <label class="switch">
+                                                                <input type="checkbox" ng-disabled="!alertenabledEdit[{{$index}}]" ng-model="alert.active" data-ng-true-value="'t'">
+                                                                <span class="slider round"></span>
+                                                            </label>
+
+                                                        </div>
+
+                                                    </td>
+                                                    <td class="editbtn">
+                                                        <div class="buttons" ng-hide="alerteditshow[$index]">
+                                                            <!--<button class="btn btn-primary" ng-click="editEmployee($index)">Edit</button>
+                                                <button class="btn btn-danger" ng-click="deleteEmployee($index)">Delete</button>-->
+                                                            <button type="button" ng-click="editalert($index)" ng-hide="alertenabledEdit[$index]" class="btn btn-success">Edit</button>
+                                                            <button type="button" ng-click="updatealert($index,alert)" ng-show="alertenabledEdit[$index]" class="btn btn-success">Update</button>
+                                                            <button type="button" ng-click="Cancelalert($index)" ng-show="alertenabledEdit[$index]" class="btn btn-success">Cancel</button>
+                                                        </div>
+                                                        <div class="buttons" ng-show="alerteditshow[$index]">
+                                                            <button type="button" ng-click="updatealert($index,alert)" class="btn btn-success">Save</button>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <button type="button" style="float:right;margin-bottom: 10px;" class="btn btn-success" ng-click="addalert()">Add</button>
+                                    </div>
+
+                                </p>
+                            </div>
+
+                            <!--/end alertsetting -->
+                            <!--start schedulehistory -->
+                            <div role="tabpanel" class="tab-pane fade" id="schedulerhistory">
+                                <p>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th width="20">#</th>
+                                                    <th width="350">Server Ip</th>
+                                                    <th width="350">Sync date</th>
+                                                    <th width="150">Synched</th>
+
+                                                </tr>
+                                            </thead>
+
+
+
+
+                                            <tbody>
+
+                                                <tr ng-repeat="history in schedulerhistory" ng-click="showmoduleuseralerthistroy(history)">
+                                                    <td class="oderlist">{{$index+1}}</td>
+                                                    <!--<td>
+                                            {{emp.departmentrolesid}}
+                                            </
+                                        </td>-->
+
+                                                    <td>
+                                                        <div>
+                                                            <input class="form-control" type="text" ng-disabled="true" ng-model="history.moduleserverip" />
+
+
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <input class="form-control" type="text" ng-disabled="true" ng-model="history.syncheddate" />
+
+
+                                                        </div>
+
+                                                    </td>
+
+                                                    <td>
+                                                        <div>
+                                                            <label class="switch">
+                                                                <input type="checkbox" ng-disabled="true" ng-model="history.synched" data-ng-true-value="'t'">
+                                                                <span class="slider round"></span>
+                                                            </label>
+
+                                                        </div>
+
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </p>
+                            </div>
+                            <!--end schedulehistory -->
+                        </div>
+
+
+
+
+                    </div>
+
+                </div><!-- /modal-body -->
+
+                <div class="col-md-3 pull-right alert alert-success" id="schedulesuccess-alert" style="padding-left:10px; position:fixed;right:10px; bottom:50px;">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    {{msgsuccess}}
+                </div>
+                <div class="col-md-3 pull-right alert alert-warning" id="schedulesuccess-warning" style="padding-left:10px; position:fixed;right:10px; bottom:50px;">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    {{msgwarning}}
+                </div>
+
+            </div><!-- /modal-content -->
+        </div><!-- /modal-dialog -->
+    </div>
+    <!-- modal -->
+    <!--Schedule history model -->
+
+    <!--<div class="modal right fade" id="schedulealertModel" tabindex="-1" role="dialog" aria-labelledby="schedulealertModel" aria-hidden="true">-->
+        <div class="modal fade" id="schedulealertModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+            <div class="modal-dialog" style="width:65%">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h7><b>Setting > Scheduler > Scheduler Configuration > Scheduler {{schedulername}}</b></h7>
+                    </div><!-- /modal-header -->
+
+                    <div class="modal-body">
+
+
+                        <table class="table table-bordered table-striped table-responsive">
+                            <thead>
+                                <tr>
+                                    <th width="20">#</th>
+                                    <th width="350">Company</th>
+                                    <th width="350">User</th>
+                                    <th width="270">Date</th>
+                                    <th width="150">Email</th>
+                                    <th width="150">Sms</th>
+                                    <th width="150">Notification</th>
+                                </tr>
+                            </thead>
+
+
+
+
+                            <tbody>
+
+                                <tr ng-repeat="history in useralerthistroy">
+                                    <td class="oderlist">{{$index+1}}</td>
+                                    <!--<td>
+        {{emp.departmentrolesid}}
+        </
+    </td>-->
+
+                                    <td>
+                                        <div>
+                                            <input class="form-control" type="text" ng-disabled="true" ng-model="history.companyname" />
+
+
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input class="form-control" type="text" ng-disabled="true" ng-model="history.username" />
+
+
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <input class="form-control" type="text" ng-disabled="true" ng-model="history.createdate" />
+
+
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <label class="switch">
+                                                <input type="checkbox" ng-disabled="true" ng-model="history.email" data-ng-true-value="'t'">
+                                                <span class="slider round"></span>
+                                            </label>
+
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <label class="switch">
+                                                <input type="checkbox" ng-disabled="true" ng-model="history.sms" data-ng-true-value="'t'">
+                                                <span class="slider round"></span>
+                                            </label>
+
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <label class="switch">
+                                                <input type="checkbox" ng-disabled="true" ng-model="history.notification" data-ng-true-value="'t'">
+                                                <span class="slider round"></span>
+                                            </label>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <!-- /tab -->
+
+                    </div><!-- /modal-body -->
+
+                </div>
+                <!-- /modal-content --Dashboard Management Description>
+            </div><!-- /modal-dialog -->
+            </div>
+            <div style="visibility: hidden;">
+                <!--<a id="modalclick" class="btn btn-default btn-block" data-toggle="modal" data-target="#myModal1_2"></a>-->
+                <a id="schedulealertmodalclick" class="btn btn-info btn-lg" data-toggle="modal" data-target="#schedulealertModel"></a>
+            </div>
+        </div>
+
+
+
+    </div>  <!-- controller -->
+

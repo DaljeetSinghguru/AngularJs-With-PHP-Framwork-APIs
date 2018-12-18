@@ -1,0 +1,135 @@
+<style>
+    .noclass:empty {
+        display: none !important;
+    }
+</style>
+<div class="sidebar-container" ng-controller="sidebarcontroller">
+    <div class="sidebar-scrollpane">
+        <div class="sidebar-content">
+            <div class="sidebar-profile clearfix">
+                <a href="app.html#/userprofile" class="pull-left">
+                    <figure class="profile-picture"> <img id="loginuserimage" class="img-circle" alt="User Name"> </figure>
+                </a>
+                <h5><span id="loginusername"></span></h5>
+                <h6><span id="loginuserrole"></span></h6>
+
+                <h6><span id="logintime"></span> </h6>
+
+            </div>
+            <!-- sidebar-profile -->
+
+
+            <div role="tabpanel">
+                <!-- Nav tabs -->
+                <!-- nav -->
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="nav">
+                        <nav class="main-nav" id="menu"></nav>
+
+                        <!-- chat-wrap -->
+                    </div>
+                    <!-- tab-pane -->
+
+                </div>
+                <!-- tab-content -->
+            </div>
+            <!-- tabpanel -->
+
+        </div>
+        <!-- sidebar-content -->
+    </div>
+    <!-- scrollpane -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            loginuserimage
+            var url =  localStorage["userimages"];
+            $("#loginuserimage").attr("src", url);
+            $("#loginusername").html(localStorage["loginusername"]);
+            $("#loginuserrole").html(localStorage["role"]);
+            $("#logintime").html(localStorage["gst"]);
+
+            var loginuserid = localStorage.getItem("loginuserid");
+            $('.menuclick').click(function () {
+
+                localStorage.setItem('LocalStorageKey', $('#sidebar').html());
+
+            });
+            $('.noclass').click(function () {
+                debugger;
+                var url = $(this).attr('href');
+                var title = $(this).attr('title');
+                if (url != undefined) {
+                    $.cookie("pageurl", $(this).attr('href'), { expires: 1, path: '/' });
+                    localStorage.setItem('menuhelp', title);
+                    $('#menuform').load($(this).attr('href'));
+                }
+
+
+
+            });
+
+
+
+            var data = {};
+            var menudata = [];
+            data.userid = loginuserid;////pass userid
+            var url = "app.html#";
+            $.post('http://192.168.1.234/team/index.php/web_api/assignmenu', data, function (msg) {
+
+                debugger
+                // msg.data[0].message;
+
+                function getMenu(parentID) {
+
+                    return menudata.filter(function (node) {
+
+                        return (node.parentmenuid === parentID);
+                    }).sort(function (a, b) {
+                        return a.index > b.index
+                        }).map(function (node) {
+
+                        var exists = menudata.some(function (childNode) {
+                            return childNode.parentmenuid === node.menuid;
+                            });
+
+                        var subMenu = (exists) ? '<ul class="collapse">' + getMenu(node.menuid).join('') + '</ul>' : "";
+                            if (parentID == "0") {
+                                var parentchild = '';
+                                if (subMenu == '') { parentchild = subMenu; }
+                                else { parentchild = '<span class="fa plus-times"></span>' + subMenu; }
+                                return '<li data-toggle="tooltip" data-placement="right"><a href="' + url + '/' + node.pagename + '" title="'+node.help+'" class="noclass"><i class="'+node.icon+'"></i>' + node.menu
+
+                                +  parentchild + '</a></li>';
+                            }
+                            if (subMenu == '') { parentchild = subMenu; }
+                            else { parentchild = '<span class="fa plus-times"></span>' + subMenu; }
+                            return '<li data-toggle="tooltip" data-placement="right"><a  class="noclass" href="' + url + '/' + node.pagename + '" title="' + node.help + '"><i class="' + node.icon +'"></i>' + node.menu + parentchild + '</a></li>';
+                    });
+                }
+
+                var menudata = msg.assignmenu;
+                var endMenu = getMenu("0");
+               // var resultObject = search("0", array);
+                $('#menu').html('<ul id="sidebar-nav" class="sidebar-nav">' + endMenu.join('') + '</ul>');
+
+                //let arr = msg.assignmenu;
+
+                //let obj = arr.find(o => o.parentmenuid === '0');
+
+                //console.log(obj);
+
+                //function getMenu("0", $scope.BindtaskMenu);
+            });
+
+
+
+
+        });
+
+        //localStorage.setItem('LocalStoragetitle', $('#sidebar').html());
+
+    </script>
+    <!-- scrollpane -->
+</div>
+
